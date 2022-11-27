@@ -1,12 +1,8 @@
-import { serve } from "https://deno.land/std@0.89.0/http/server.ts";
+import { Application } from "./deps.ts";
+import { userRouter } from "./routers/user.ts";
 
-const port = 8000;
-const http_server = serve({
-  port: port,
-});
+const app = new Application();
 
-for await (const req of http_server) {
-  req.respond({
-    body: "Hello Deno World\n",
-  });
-}
+app.use(userRouter.routes());
+
+await app.listen({ port: 8080 });
